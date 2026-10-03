@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hariom | 3D Showcase</title>
+  <title>Hariom | Private 3D Showcase</title>
   <style>
     * {
       box-sizing: border-box;
@@ -104,6 +104,94 @@
     }
     .enter-btn:active {
       transform: scale(0.96);
+    }
+
+    /* Password Modal Box */
+    #pwd-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    #pwd-modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #151822;
+      border: 1px solid #2e354b;
+      border-radius: 20px;
+      padding: 26px 22px;
+      max-width: 310px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      animation: popIn 0.3s ease-out;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-box h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: #f8fafc;
+    }
+    .modal-box p {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+    }
+
+    .pwd-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #3b4259;
+      background: #090a0f;
+      color: #fff;
+      font-size: 15px;
+      text-align: center;
+      outline: none;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .pwd-input:focus {
+      border-color: #a855f7;
+    }
+
+    .unlock-btn {
+      width: 100%;
+      padding: 12px 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    .cancel-btn {
+      margin-top: 10px;
+      background: transparent;
+      border: none;
+      color: #64748b;
+      font-size: 12px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .error-msg {
+      color: #f43f5e;
+      font-size: 12px;
+      margin-top: 10px;
+      display: none;
     }
 
     /* 2. Black Theme Interior Screen */
@@ -214,8 +302,21 @@
         Follow on Instagram
       </a>
 
-      <!-- Enter Site Trigger -->
-      <button class="enter-btn" onclick="enterSite()">Enter The Site ✦</button>
+      <!-- Open Password Box -->
+      <button class="enter-btn" onclick="openPasswordModal()">Enter The Site 🔒</button>
+    </div>
+  </div>
+
+  <!-- Password Box Popup -->
+  <div id="pwd-modal">
+    <div class="modal-box">
+      <h3>Access Locked 🔐</h3>
+      <p>Andar jaane ke liye password daalein</p>
+      <input type="password" id="pass-input" class="pwd-input" placeholder="Password daalein...">
+      <button class="unlock-btn" onclick="verifyPassword()">Unlock Projects ✦</button>
+      <div id="error-alert" class="error-msg">Galat Password! Dubara try karein.</div>
+      <br>
+      <button class="cancel-btn" onclick="closePasswordModal()">Cancel</button>
     </div>
   </div>
 
@@ -226,7 +327,7 @@
       <p>Picture ko haath se swipe karke 3D me ghumayein</p>
     </header>
 
-    <!-- Project 1: Mountain & Nature Image -->
+    <!-- Project 1 -->
     <div class="card">
       <h2>Project 01 • Serene Nature</h2>
       <p>Cinematic Nature & Landscape</p>
@@ -238,7 +339,7 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
-    <!-- Project 2: Sunset & Sky Image -->
+    <!-- Project 2 -->
     <div class="card">
       <h2>Project 02 • Sky Aesthetics</h2>
       <p>Golden Hour Sunset & Clouds</p>
@@ -250,7 +351,7 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
-    <!-- Project 3: Creative Art & Sketch Image -->
+    <!-- Project 3 -->
     <div class="card">
       <h2>Project 03 • Artistic Creation</h2>
       <p>Fine Art & Sketchwork Piece</p>
@@ -264,13 +365,35 @@
   </div>
 
   <script>
-    // Entry Animation Trigger
-    function enterSite() {
-      document.getElementById('gate-screen').classList.add('hidden');
-      document.getElementById('interior-content').classList.add('visible');
+    // Aapka Secret Password:
+    const SECRET_PASSWORD = "Shivam bhiya";
+
+    function openPasswordModal() {
+      document.getElementById('pwd-modal').classList.add('active');
+      document.getElementById('pass-input').value = '';
+      document.getElementById('error-alert').style.display = 'none';
+      document.getElementById('pass-input').focus();
     }
 
-    // Hand/Touch 3D Rotation Engine
+    function closePasswordModal() {
+      document.getElementById('pwd-modal').classList.remove('active');
+    }
+
+    function verifyPassword() {
+      const enteredPass = document.getElementById('pass-input').value;
+      const errorMsg = document.getElementById('error-alert');
+
+      if (enteredPass.trim() === SECRET_PASSWORD) {
+        closePasswordModal();
+        // Zoom-in Transition
+        document.getElementById('gate-screen').classList.add('hidden');
+        document.getElementById('interior-content').classList.add('visible');
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    }
+
+    // Touch 3D Rotation Engine
     document.querySelectorAll('.rotatable').forEach(el => {
       let isDragging = false;
       let startX, startY;
@@ -306,12 +429,12 @@
         currentRotY = 0;
       };
 
-      // Mobile Touch
+      // Touch events (Mobile)
       el.addEventListener('touchstart', onStart, { passive: true });
       window.addEventListener('touchmove', onMove, { passive: true });
       window.addEventListener('touchend', onEnd);
 
-      // Desktop Mouse
+      // Mouse events (Desktop)
       el.addEventListener('mousedown', onStart);
       window.addEventListener('mousemove', onMove);
       window.addEventListener('mouseup', onEnd);
