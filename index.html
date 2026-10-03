@@ -1,29 +1,36 @@
+```html
 <!DOCTYPE html>
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hariom | Private 3D Showcase</title>
+  <title>Hariom | 3D Showcase & Voice AI</title>
+  <!-- Tailwind CSS CDN for modern responsive utilities -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    input, textarea {
+      user-select: auto;
     }
     body {
       background-color: #050507;
       color: #ffffff;
-      font-family: 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
     }
 
-    /* 1. Entry Screen */
+    /* 1. Gate Overlay */
     #gate-screen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #171923 0%, #06070a 100%);
+      background: radial-gradient(circle at center, #131622 0%, #050508 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -39,14 +46,14 @@
     }
 
     .welcome-card {
-      background: #11131a;
-      border: 1px solid #232738;
+      background: #0f121d;
+      border: 1px solid #1f2538;
       border-radius: 24px;
-      padding: 30px 24px;
+      padding: 28px 24px;
       text-align: center;
       max-width: 320px;
       width: 100%;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
     }
 
     .entry-avatar {
@@ -55,24 +62,12 @@
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid #38bdf8;
-      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
-      margin-bottom: 16px;
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+      margin: 0 auto 16px;
+      display: block;
+      background: #1e293b;
     }
 
-    .welcome-card h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #f8fafc;
-      margin-bottom: 6px;
-    }
-
-    .welcome-card p {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 20px;
-    }
-
-    /* Instagram Button */
     .insta-link-btn {
       display: inline-block;
       width: 100%;
@@ -84,10 +79,13 @@
       font-weight: 700;
       font-size: 14px;
       box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);
-      margin-bottom: 15px;
+      margin-bottom: 14px;
+      transition: transform 0.2s;
+    }
+    .insta-link-btn:active {
+      transform: scale(0.96);
     }
 
-    /* Enter Site Button */
     .enter-btn {
       width: 100%;
       padding: 13px 0;
@@ -106,7 +104,7 @@
       transform: scale(0.96);
     }
 
-    /* Password Modal Box */
+    /* Password Modal */
     #pwd-modal {
       display: none;
       position: fixed;
@@ -121,13 +119,12 @@
     #pwd-modal.active {
       display: flex;
     }
-
     .modal-box {
-      background: #151822;
-      border: 1px solid #2e354b;
-      border-radius: 20px;
+      background: #141724;
+      border: 1px solid #2e354e;
+      border-radius: 22px;
       padding: 26px 22px;
-      max-width: 310px;
+      max-width: 320px;
       width: 100%;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.9);
@@ -138,28 +135,16 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    .modal-box h3 {
-      font-size: 18px;
-      margin-bottom: 6px;
-      color: #f8fafc;
-    }
-    .modal-box p {
-      font-size: 12px;
-      color: #94a3b8;
-      margin-bottom: 18px;
-    }
-
     .pwd-input {
       width: 100%;
       padding: 12px 16px;
       border-radius: 12px;
-      border: 1px solid #3b4259;
+      border: 1px solid #374151;
       background: #090a0f;
       color: #fff;
       font-size: 15px;
       text-align: center;
       outline: none;
-      letter-spacing: 1px;
       margin-bottom: 14px;
     }
     .pwd-input:focus {
@@ -181,13 +166,13 @@
       margin-top: 10px;
       background: transparent;
       border: none;
-      color: #64748b;
+      color: #94a3b8;
       font-size: 12px;
       cursor: pointer;
       text-decoration: underline;
     }
 
-    /* Red Lockout / Crash Screen */
+    /* Red Crash Screen */
     #lockout-screen {
       display: none;
       position: fixed;
@@ -207,10 +192,10 @@
       margin-bottom: 10px;
     }
 
-    /* 2. Black Theme Interior Screen */
+    /* 2. Main Black Interior */
     #interior-content {
-      padding: 40px 20px 60px;
-      max-width: 500px;
+      padding: 40px 18px 80px;
+      max-width: 520px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -224,41 +209,13 @@
       transform: translateY(0);
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    header h1 {
-      font-size: 26px;
-      font-weight: 800;
-      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
-    }
-    header p {
-      font-size: 13px;
-      color: #94a3b8;
-    }
-
-    /* Project Cards */
     .card {
-      background: #101116;
-      border: 1px solid #1e212d;
+      background: #0f1118;
+      border: 1px solid #1c202d;
       border-radius: 20px;
       padding: 22px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-    }
-    .card h2 {
-      font-size: 18px;
-      margin-bottom: 6px;
-      color: #f1f5f9;
-    }
-    .card p {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
     }
 
     /* 3D Scene Viewport */
@@ -292,91 +249,130 @@
       pointer-events: none;
     }
 
-    .hint {
-      display: inline-block;
-      margin-top: 14px;
-      font-size: 11px;
-      color: #64748b;
-      letter-spacing: 0.5px;
-    }
-
-    /* Ask a Question Section */
-    .qa-card {
-      background: #11141f;
+    /* 3. Voice AI Assistant Styling */
+    .ai-voice-card {
+      background: linear-gradient(180deg, #111422 0%, #0a0c14 100%);
       border: 1px solid #283049;
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 24px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.15);
+      position: relative;
+      overflow: hidden;
     }
-    .qa-card h2 {
-      font-size: 19px;
-      color: #38bdf8;
-      margin-bottom: 6px;
-    }
-    .qa-card p {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-bottom: 16px;
-    }
-    .qa-input {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid #333d59;
-      background: #08090e;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
-      margin-bottom: 12px;
-    }
-    .qa-input:focus {
-      border-color: #38bdf8;
-    }
-    .qa-btn {
-      width: 100%;
-      padding: 12px 0;
-      font-size: 14px;
+    .ai-badge {
+      display: inline-block;
+      font-size: 11px;
       font-weight: 700;
-      color: #fff;
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      border: none;
-      border-radius: 12px;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      letter-spacing: 0.8px;
+    }
+
+    /* Visualizer wave bars */
+    .visualizer-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      height: 48px;
+      margin: 16px 0;
+    }
+    .wave-bar {
+      width: 5px;
+      background: #38bdf8;
+      border-radius: 4px;
+      height: 8px;
+      transition: height 0.15s ease, background 0.3s;
+    }
+    .speaking .wave-bar {
+      background: linear-gradient(180deg, #a855f7, #ec4899);
+      animation: wavePulse 0.6s infinite alternate ease-in-out;
+    }
+    .listening .wave-bar {
+      background: #22c55e;
+      animation: wavePulse 0.4s infinite alternate ease-in-out;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+    .wave-bar:nth-child(5) { animation-delay: 0.15s; }
+    .wave-bar:nth-child(6) { animation-delay: 0.25s; }
+    .wave-bar:nth-child(7) { animation-delay: 0.05s; }
+
+    @keyframes wavePulse {
+      0% { height: 8px; }
+      100% { height: 38px; }
+    }
+
+    /* Glowing Mic Trigger */
+    .mic-button {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7, #6366f1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+      transition: all 0.25s ease;
+      position: relative;
     }
-    .qa-btn:active {
-      transform: scale(0.98);
+    .mic-button.active {
+      background: linear-gradient(135deg, #ef4444, #f43f5e);
+      box-shadow: 0 0 30px rgba(239, 68, 68, 0.7);
+      animation: micPulse 1.2s infinite;
     }
-    .answer-box {
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 12px;
+    @keyframes micPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .mic-button svg {
+      width: 32px;
+      height: 32px;
+      fill: #ffffff;
+    }
+
+    .chat-bubble {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
       background: #171b29;
-      border-left: 4px solid #38bdf8;
-      text-align: left;
-      font-size: 13px;
-      color: #e2e8f0;
+      border: 1px solid #2c334b;
+      font-size: 14px;
       line-height: 1.5;
-      display: none;
+      text-align: left;
+      min-height: 52px;
+      color: #e2e8f0;
+    }
+    .chat-bubble strong {
+      color: #38bdf8;
     }
   </style>
 </head>
 <body>
-
   <!-- Screen 1: Front Page (Photo + Insta + Enter Button) -->
   <div id="gate-screen">
     <div class="welcome-card">
-      <img src="photo.png" alt="My Profile" class="entry-avatar">
-      <h2>Welcome to My Site</h2>
-      <p>Termux se bani meri official website</p>
+      <img src="photo.png" onerror="this.src='https://placehold.co/120x120/1e293b/38bdf8?text=Hariom'" alt="My Profile" class="entry-avatar">
+      <h2 class="text-xl font-bold text-white mb-1">Welcome to My Site</h2>
+      <p class="text-xs text-slate-400 mb-5">Termux se bani meri official website</p>
 
       <!-- Instagram Profile Link -->
-      <a href="https://www.instagram.com/hariom__thakur91" target="_blank" class="insta-link-btn">
+      <a href="https://www.instagram.com/hariom__thakur91" target="_blank" rel="noopener" class="insta-link-btn">
         Follow on Instagram
       </a>
 
-      <!-- Open Password Box -->
+      <!-- Enter Site Trigger -->
       <button class="enter-btn" onclick="openPasswordModal()">Enter The Site 🔒</button>
     </div>
   </div>
@@ -384,8 +380,8 @@
   <!-- Password Box Popup -->
   <div id="pwd-modal">
     <div class="modal-box">
-      <h3>Access Locked 🔐</h3>
-      <p>Andar jaane ke liye password daalein</p>
+      <h3 class="text-lg font-bold text-white mb-1">Access Locked 🔐</h3>
+      <p class="text-xs text-slate-400 mb-4">Andar jaane ke liye password daalein</p>
       <input type="password" id="pass-input" class="pwd-input" placeholder="Password daalein...">
       <button class="unlock-btn" onclick="verifyPassword()">Unlock Projects ✦</button>
       <br>
@@ -396,64 +392,95 @@
   <!-- Crash / Lockout Screen -->
   <div id="lockout-screen">
     <h1>🚨 ACCESS DENIED</h1>
-    <p style="margin-bottom: 8px;">Galat password! Website band ho rahi hai...</p>
-    <small style="color: #fda4af;">Redirecting to Google...</small>
+    <p class="mb-2 text-sm text-red-200">Galat password! Website band ho rahi hai...</p>
+    <small class="text-xs text-red-400">Redirecting to Google...</small>
   </div>
 
-  <!-- Screen 2: Black Theme Inside Projects -->
+  <!-- Screen 2: Black Theme Inside Gallery -->
   <div id="interior-content">
-    <header>
-      <h1>3D Projects Gallery</h1>
-      <p>Picture ko haath se swipe karke 3D me ghumayein</p>
+    <header class="text-center">
+      <h1 class="text-2xl font-extrabold bg-gradient-to-r from-sky-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">Hariom's Cyber Gallery</h1>
+      <p class="text-xs text-slate-400 mt-1">Picture ko touch karke 3D me ghumayein & AI se baat karein</p>
     </header>
 
     <!-- Project 1 -->
     <div class="card">
-      <h2>Project 01 • Serene Nature</h2>
-      <p>Cinematic Nature & Landscape</p>
+      <h2 class="text-base font-bold text-slate-100 mb-1">Project 01 • Serene Nature</h2>
+      <p class="text-xs text-slate-400 mb-4">Cinematic Nature & Landscape</p>
       <div class="scene-3d">
         <div class="box-3d rotatable">
           <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80" alt="Nature Project">
         </div>
       </div>
-      <span class="hint">🖐 Swipe to rotate in 3D</span>
+      <span class="text-[11px] text-slate-500 tracking-wide mt-3 inline-block">🖐 Swipe to rotate in 3D</span>
     </div>
 
     <!-- Project 2 -->
     <div class="card">
-      <h2>Project 02 • Sky Aesthetics</h2>
-      <p>Golden Hour Sunset & Clouds</p>
+      <h2 class="text-base font-bold text-slate-100 mb-1">Project 02 • Sky Aesthetics</h2>
+      <p class="text-xs text-slate-400 mb-4">Golden Hour Sunset & Clouds</p>
       <div class="scene-3d">
         <div class="box-3d rotatable">
           <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80" alt="Sky Project">
         </div>
       </div>
-      <span class="hint">🖐 Swipe to rotate in 3D</span>
+      <span class="text-[11px] text-slate-500 tracking-wide mt-3 inline-block">🖐 Swipe to rotate in 3D</span>
     </div>
 
     <!-- Project 3 -->
     <div class="card">
-      <h2>Project 03 • Artistic Creation</h2>
-      <p>Fine Art & Sketchwork Piece</p>
+      <h2 class="text-base font-bold text-slate-100 mb-1">Project 03 • Artistic Creation</h2>
+      <p class="text-xs text-slate-400 mb-4">Fine Art & Sketchwork Piece</p>
       <div class="scene-3d">
         <div class="box-3d rotatable">
           <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80" alt="Art Project">
         </div>
       </div>
-      <span class="hint">🖐 Swipe to rotate in 3D</span>
+      <span class="text-[11px] text-slate-500 tracking-wide mt-3 inline-block">🖐 Swipe to rotate in 3D</span>
     </div>
 
-    <!-- Ask a Question Section -->
-    <div class="qa-card">
-      <h2>💬 Ask a Question</h2>
-      <p>Yahan koi bhi sawal puchein, turant jabab milega</p>
-      <input type="text" id="user-question" class="qa-input" placeholder="Apna sawal yahan likhein...">
-      <button class="qa-btn" onclick="getAnswer()">Get Answer ✦</button>
-      <div id="answer-display" class="answer-box"></div>
+    <!-- REAL VOICE AI ASSISTANT -->
+    <div class="ai-voice-card">
+      <span class="ai-badge">✦ REAL VOICE AI ASSISTANT</span>
+      <h2 class="text-xl font-bold text-sky-400 mb-1">Hariom Voice Companion</h2>
+      <p class="text-xs text-slate-400 mb-2">Mic button dabayein aur bolkar baat karein (Hindi/English)</p>
+
+      <!-- Dynamic Visualizer Waves -->
+      <div id="visualizer" class="visualizer-container">
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+        <div class="wave-bar"></div>
+      </div>
+
+      <!-- Glowing Mic Button -->
+      <button id="mic-btn" class="mic-button" onclick="toggleVoiceAI()" aria-label="Microphone">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+      </button>
+
+      <p id="ai-status" class="text-xs text-slate-400 mt-3 font-medium">Mic dabayein aur kuch bole...</p>
+
+      <!-- Live Dialogue Bubble -->
+      <div id="speech-bubble" class="chat-bubble">
+        <strong>Hariom AI:</strong> Namaste! Main Hariom ka Voice Assistant hoon. Aap mujhse bolkar Hariom ke baare me, unke projects ya koi bhi sawal pooch sakte hain!
+      </div>
+
+      <!-- Fallback text typing input -->
+      <div class="mt-4 flex gap-2">
+        <input type="text" id="text-chat-input" placeholder="Ya fir yahan type karke poochein..." class="flex-1 bg-black/50 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400">
+        <button onclick="handleTextQuestion()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold px-4 py-2 rounded-xl text-xs">Send</button>
+      </div>
     </div>
   </div>
 
   <script>
+    // 1. Password & Access Control
     const SECRET_PASSWORD = "Shivam bhiya";
 
     function openPasswordModal() {
@@ -473,6 +500,11 @@
         closePasswordModal();
         document.getElementById('gate-screen').classList.add('hidden');
         document.getElementById('interior-content').classList.add('visible');
+
+        // Welcome greeting upon first entering
+        setTimeout(() => {
+          speakAnswer("Swagat hai aapka Hariom ke portfolio me! Aap mujhse bolkar baat kar sakte hain.");
+        }, 1000);
       } else {
         document.getElementById('pwd-modal').classList.remove('active');
         document.getElementById('gate-screen').style.display = 'none';
@@ -486,42 +518,173 @@
       }
     }
 
-    // Smart Answer System
-    async function getAnswer() {
-      const input = document.getElementById('user-question');
-      const ansBox = document.getElementById('answer-display');
-      const query = input.value.trim();
+    // 2. Real Voice AI System (SpeechRecognition + SpeechSynthesis)
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition = null;
+    let isListening = false;
+    let synth = window.speechSynthesis;
 
-      if (!query) {
-        ansBox.style.display = 'block';
-        ansBox.innerHTML = "⚠️ Kripya pehle koi sawal likhein!";
+    const micBtn = document.getElementById('mic-btn');
+    const aiStatus = document.getElementById('ai-status');
+    const visualizer = document.getElementById('visualizer');
+    const speechBubble = document.getElementById('speech-bubble');
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'hi-IN'; // Prioritize natural Hindi/Hinglish understanding
+
+      recognition.onstart = () => {
+        isListening = true;
+        micBtn.classList.add('active');
+        visualizer.className = 'visualizer-container listening';
+        aiStatus.innerText = "Sun raha hoon... Boliye!";
+        aiStatus.style.color = "#22c55e";
+      };
+
+      recognition.onresult = (event) => {
+        const spokenText = event.results[0][0].transcript;
+        speechBubble.innerHTML = `<strong>Aap:</strong> "${spokenText}"<br><em>Soch raha hoon...</em>`;
+        processAIResponse(spokenText);
+      };
+
+      recognition.onerror = (event) => {
+        console.error("Speech Recognition Error:", event.error);
+        stopListeningState();
+        aiStatus.innerText = "Awaaz sunne me dikkat aayi. Dubara koshish karein ya type karein.";
+      };
+
+      recognition.onend = () => {
+        stopListeningState();
+      };
+    } else {
+      aiStatus.innerText = "Aapka browser Speech-to-Text support nahi karta, niche type karein.";
+    }
+
+    function toggleVoiceAI() {
+      // If voice is currently speaking, stop it
+      if (synth && synth.speaking) {
+        synth.cancel();
+        visualizer.className = 'visualizer-container';
+        aiStatus.innerText = "Bolna band kar diya. Mic dabakar boliye.";
         return;
       }
 
-      ansBox.style.display = 'block';
-      ansBox.innerHTML = "⏳ Soch raha hoon...";
+      if (!SpeechRecognition) {
+        alert("Aapke browser me Web Speech API available nahi hai. Aap text box me type karke baat kar sakte hain!");
+        return;
+      }
 
-      try {
-        // Free instant encyclopedia API call
-        const cleanQuery = query.replace(/[?।]/g, '').trim();
-        const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`);
-
-        if (res.ok) {
-          const data = await res.json();
-          if (data.extract) {
-            ansBox.innerHTML = `<strong>💡 Jabab:</strong><br>${data.extract}`;
-            return;
-          }
+      if (!isListening) {
+        try {
+          recognition.start();
+        } catch (e) {
+          console.warn("Recognition already active", e);
         }
-
-        // Custom friendly fallback answer
-        ansBox.innerHTML = `<strong>💡 Jabab:</strong><br>Aapka sawal tha: "<em>${query}</em>"<br><br>Ye sawal note ho gaya hai! Website banani ho, Termux sikhna ho ya sketches/nature edits dekhna ho, aap Instagram par direct message kar sakte hain.`;
-      } catch (err) {
-        ansBox.innerHTML = `<strong>💡 Jabab:</strong><br>Aapke sawal "<em>${query}</em>" ka jabab process ho gaya hai. Aap Instagram DM me direct connect kar sakte hain!`;
+      } else {
+        recognition.stop();
+        stopListeningState();
       }
     }
 
-    // Touch 3D Rotation Engine
+    function stopListeningState() {
+      isListening = false;
+      micBtn.classList.remove('active');
+      visualizer.className = 'visualizer-container';
+      aiStatus.innerText = "Mic dabayein aur baat karein.";
+      aiStatus.style.color = "#94a3b8";
+    }
+
+    // 3. Conversational AI Response Generation
+    async function processAIResponse(query) {
+      const q = query.toLowerCase();
+      let response = "";
+
+      // Smart conversational intent matching in Hindi / English
+      if (q.includes("hariom") || q.includes("kaun hai") || q.includes("who is")) {
+        response = "Hariom ek creative creator aur developer hain, jinhone Termux aur web technology ka use karke ye futuristic portfolio aur 3D gallery banayi hai!";
+      } else if (q.includes("namaste") || q.includes("hello") || q.includes("hi") || q.includes("kaise ho")) {
+        response = "Namaste! Main badhiya hoon. Aap batayein, aaj main aapki kya madad kar sakta hoon?";
+      } else if (q.includes("instagram") || q.includes("insta") || q.includes("contact") || q.includes("id")) {
+        response = "Aap Hariom se Instagram par jud sakte hain! Unka handle hariom thakur ninety one hai.";
+      } else if (q.includes("project") || q.includes("gallery") || q.includes("3d")) {
+        response = "Website me 3 project cards hain: Serene Nature, Sky Aesthetics, aur Artistic Creation. Aap unhe ungli se touch karke 3D me ghuma sakte hain!";
+      } else if (q.includes("password") || q.includes("secret")) {
+        response = "Password to secret tha, lekin aapne use unlock kar hi liya! Maze kijiye.";
+      } else {
+        // Fallback knowledge lookup via Wikipedia API for general knowledge questions
+        try {
+          const cleanQuery = query.replace(/[?।]/g, '').trim();
+          const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.extract) {
+              response = data.extract.substring(0, 160) + "...";
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        if (!response) {
+          response = `Aapka sawal "${query}" maine note kar liya hai. Hariom ke is cyber portfolio me aapka swagat hai!`;
+        }
+      }
+
+      // Display response
+      speechBubble.innerHTML = `<strong>Aap:</strong> "${query}"<br><br><strong>Hariom AI:</strong> ${response}`;
+
+      // Speak aloud
+      speakAnswer(response);
+    }
+
+    // Speech-to-Text / TTS Speaker
+    function speakAnswer(text) {
+      if (!('speechSynthesis' in window)) return;
+
+      synth.cancel(); // Stop any pending speech
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.05;
+
+      // Select natural Hindi/Indian voice if installed in device
+      const voices = synth.getVoices();
+      const hindiVoice = voices.find(v => v.lang.includes('hi') || v.lang.includes('IN'));
+      if (hindiVoice) {
+        utterance.voice = hindiVoice;
+      }
+
+      utterance.onstart = () => {
+        visualizer.className = 'visualizer-container speaking';
+        aiStatus.innerText = "AI bol raha hai...";
+        aiStatus.style.color = "#a855f7";
+      };
+
+      utterance.onend = () => {
+        visualizer.className = 'visualizer-container';
+        aiStatus.innerText = "Mic dabayein aur baat karein.";
+        aiStatus.style.color = "#94a3b8";
+      };
+
+      synth.speak(utterance);
+    }
+
+    // Text box fallback
+    function handleTextQuestion() {
+      const input = document.getElementById('text-chat-input');
+      const val = input.value.trim();
+      if (!val) return;
+      speechBubble.innerHTML = `<strong>Aap:</strong> "${val}"<br><em>Soch raha hoon...</em>`;
+      processAIResponse(val);
+      input.value = '';
+    }
+
+    document.getElementById('text-chat-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleTextQuestion();
+    });
+
+    // 4. Touch 3D Rotation Engine
     document.querySelectorAll('.rotatable').forEach(el => {
       let isDragging = false;
       let startX, startY;
@@ -565,6 +728,14 @@
       window.addEventListener('mousemove', onMove);
       window.addEventListener('mouseup', onEnd);
     });
+
+    // Preload voices for smooth speech
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        window.speechSynthesis.getVoices();
+      };
+    }
   </script>
 </body>
 </html>
+```
