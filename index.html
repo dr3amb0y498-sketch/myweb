@@ -187,11 +187,24 @@
       text-decoration: underline;
     }
 
-    .error-msg {
-      color: #f43f5e;
-      font-size: 12px;
-      margin-top: 10px;
+    /* Red Lockout / Crash Screen on Wrong Password */
+    #lockout-screen {
       display: none;
+      position: fixed;
+      inset: 0;
+      background: #450a0a;
+      color: #fecdd3;
+      z-index: 2000;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
+    }
+    #lockout-screen h1 {
+      font-size: 32px;
+      color: #ff4d4d;
+      margin-bottom: 10px;
     }
 
     /* 2. Black Theme Interior Screen */
@@ -314,10 +327,16 @@
       <p>Andar jaane ke liye password daalein</p>
       <input type="password" id="pass-input" class="pwd-input" placeholder="Password daalein...">
       <button class="unlock-btn" onclick="verifyPassword()">Unlock Projects ✦</button>
-      <div id="error-alert" class="error-msg">Galat Password! Dubara try karein.</div>
       <br>
       <button class="cancel-btn" onclick="closePasswordModal()">Cancel</button>
     </div>
+  </div>
+
+  <!-- Crash / Lockout Screen -->
+  <div id="lockout-screen">
+    <h1>🚨 ACCESS DENIED</h1>
+    <p style="margin-bottom: 8px;">Galat password! Website band ho rahi hai...</p>
+    <small style="color: #fda4af;">Redirecting to Google...</small>
   </div>
 
   <!-- Screen 2: Black Theme Inside Projects -->
@@ -365,13 +384,11 @@
   </div>
 
   <script>
-    // Aapka Secret Password:
     const SECRET_PASSWORD = "Shivam bhiya";
 
     function openPasswordModal() {
       document.getElementById('pwd-modal').classList.add('active');
       document.getElementById('pass-input').value = '';
-      document.getElementById('error-alert').style.display = 'none';
       document.getElementById('pass-input').focus();
     }
 
@@ -381,15 +398,25 @@
 
     function verifyPassword() {
       const enteredPass = document.getElementById('pass-input').value;
-      const errorMsg = document.getElementById('error-alert');
 
       if (enteredPass.trim() === SECRET_PASSWORD) {
         closePasswordModal();
-        // Zoom-in Transition
         document.getElementById('gate-screen').classList.add('hidden');
         document.getElementById('interior-content').classList.add('visible');
       } else {
-        errorMsg.style.display = 'block';
+        // Galat Password: Close / Kick-out System
+        document.getElementById('pwd-modal').classList.remove('active');
+        document.getElementById('gate-screen').style.display = 'none';
+        const lockout = document.getElementById('lockout-screen');
+        lockout.style.display = 'flex';
+
+        // Pehle browser window close karne ki koshish karega
+        window.close();
+
+        // 1.5 second baad Google par fek dega (saamne wale ko lagega site band ho gayi)
+        setTimeout(() => {
+          window.location.replace("https://www.google.com");
+        }, 1500);
       }
     }
 
@@ -429,12 +456,10 @@
         currentRotY = 0;
       };
 
-      // Touch events (Mobile)
       el.addEventListener('touchstart', onStart, { passive: true });
       window.addEventListener('touchmove', onMove, { passive: true });
       window.addEventListener('touchend', onEnd);
 
-      // Mouse events (Desktop)
       el.addEventListener('mousedown', onStart);
       window.addEventListener('mousemove', onMove);
       window.addEventListener('mouseup', onEnd);
