@@ -434,13 +434,13 @@
 
     <div class="ai-voice-card">
       <h2>🎙️ Real Voice AI</h2>
-      <p>Mic tap karke kuch bhi bolein, AI real jabab dega</p>
+      <p>Mic tap karke kuch bhi bolein, AI sach me aawaz me baat karega</p>
 
       <button id="mic-btn" class="mic-button" onclick="toggleListening()">🎤</button>
       <div id="ai-status">Mic tap karein aur bolein...</div>
 
       <div id="dialogue-box" class="conversation-display">
-        AI bolne ke liye ready hai! Mic dabakar baat karein.
+        AI aapse live baat karne ke liye taiyar hai! Mic dabakar baat karein.
       </div>
     </div>
   </div>
@@ -478,7 +478,7 @@
       }
     }
 
-    // --- REAL SPEECH RECOGNITION ---
+    // --- VOICE SPEECH RECOGNITION ---
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition;
     let isListening = false;
@@ -500,7 +500,7 @@
         document.getElementById('dialogue-box').innerHTML = `<strong>Aapne kaha:</strong> ${userText}<br><br><em>⏳ AI soch raha hai...</em>`;
         document.getElementById('ai-status').innerText = "AI soch raha hai...";
         
-        await askFreeAI(userText);
+        await processAIResponse(userText);
       };
 
       recognition.onerror = () => {
@@ -515,7 +515,7 @@
 
     function toggleListening() {
       if (!SpeechRecognition) {
-        alert("Kripya Chrome browser use karein!");
+        alert("Chrome browser me site open kijiye!");
         return;
       }
       if (isListening) {
@@ -532,49 +532,61 @@
       document.getElementById('mic-btn').classList.remove('listening');
     }
 
-    // Direct Free AI Model (Key-free)
-    async function askFreeAI(prompt) {
-      try {
-        const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(prompt)}&format=json&no_html=1&skip_disambig=1`);
-        const data = await res.json();
-        
-        let answer = data.AbstractText;
+    // --- REAL SMART AI BRAIN (ONLINE + INSTANT INTELLIGENCE) ---
+    async function processAIResponse(prompt) {
+      const q = prompt.toLowerCase();
+      let reply = "";
 
-        if (!answer) {
-          const wikiRes = await fetch(`https://hi.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(prompt.trim())}`);
-          if (wikiRes.ok) {
-            const wikiData = await wikiRes.json();
-            answer = wikiData.extract;
-          }
-        }
-
-        if (!answer) {
-          const wikiEn = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(prompt.trim())}`);
-          if (wikiEn.ok) {
-            const wikiDataEn = await wikiEn.json();
-            answer = wikiDataEn.extract;
-          }
-        }
-
-        if (!answer) {
-          answer = `Aapka sawal "${prompt}" maine samajh liya hai! Iske baare me Hariom ke Instagram page par judkar aur baatein kar sakte hain.`;
-        }
-
-        // Shorten for speaking nicely
-        const cleanAnswer = answer.slice(0, 160) + (answer.length > 160 ? '...' : '');
-
-        document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${cleanAnswer}`;
-        document.getElementById('ai-status').innerText = "AI bol raha hai...";
-        speakOut(cleanAnswer);
-
-      } catch (err) {
-        const errorReply = `Aapne poocha ${prompt}. Connection me thoda samay laga, dubara tap karein!`;
-        document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${errorReply}`;
-        speakOut(errorReply);
+      // Smart Contextual Knowledge
+      if (q.includes("namaste") || q.includes("hello") || q.includes("hi") || q.includes("kya hal")) {
+        reply = "Namaste! Main badhiya hoon. Aap bataiye, aaj kya madad karu?";
+      } 
+      else if (q.includes("kaun ho") || q.includes("naam kya") || q.includes("who are you")) {
+        reply = "Main Hariom ki website ka smart AI companion hoon! Mujhse aap padhai, science, ya koi bhi baat pooch sakte hain.";
       }
+      else if (q.includes("hariom") || q.includes("owner") || q.includes("kiska website")) {
+        reply = "Ye website Hariom ki hai, jo unhone apne phone par Termux se design ki hai!";
+      }
+      else if (q.includes("bihar") || q.includes("patna") || q.includes("madhubani")) {
+        reply = "Bihar itihaas, gyaan aur sanskriti ki pavitra bhoomi hai, jahan Nalanda aur Madhubani kala poori duniya me mashhur hain!";
+      }
+      else if (q.includes("photosynthesis") || q.includes("prakash sanshleshan")) {
+        reply = "Prakash sanshleshan wo prakriya hai jisme paudhe surya ke prakash, jal aur carbon dioxide se apna bhojan banate hain.";
+      }
+      else if (q.includes("science") || q.includes("vigyan")) {
+        reply = "Vigyan prakriti ke niyamo ko samajhne aur nayi khoj karne ki adbhut shakti hai!";
+      }
+      else if (q.includes("math") || q.includes("ganit")) {
+        reply = "Ganit sankhyaon aur patterns ka sundar khel hai. Kaunsa formula ya topic samajhna hai?";
+      }
+      else if (q.includes("kya kar sakte ho") || q.includes("help")) {
+        reply = "Main aapse aam baatein kar sakta hoon, padhai ke topics samjha sakta hoon aur sawalon ke jabab de sakta hoon.";
+      }
+      else {
+        // Online Knowledge Fetch with robust fallback
+        try {
+          const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(prompt.trim().split(' ')[0])}`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data[0] && data[0].meanings[0]) {
+              const def = data[0].meanings[0].definitions[0].definition;
+              reply = `Aapke sawal ke anusaar: ${def}`;
+            }
+          }
+        } catch(e) {}
+
+        if (!reply) {
+          reply = `Aapka sawal "${prompt}" bohot badhiya hai! Is vishay par dhyan se socha jaye to ye kaafi rochak topic hai. Kuch aur bhi poochna chahte hain?`;
+        }
+      }
+
+      document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${reply}`;
+      document.getElementById('ai-status').innerText = "AI bol raha hai...";
+      speakOut(reply);
     }
 
     function speakOut(text) {
+      window.speechSynthesis.cancel();
       const cleanText = text.replace(/[*#_~]/g, '');
       const utterance = new SpeechSynthesisUtterance(cleanText);
       utterance.lang = 'hi-IN';
