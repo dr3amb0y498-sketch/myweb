@@ -187,7 +187,7 @@
       text-decoration: underline;
     }
 
-    /* Red Lockout / Crash Screen on Wrong Password */
+    /* Red Lockout / Crash Screen */
     #lockout-screen {
       display: none;
       position: fixed;
@@ -299,6 +299,67 @@
       color: #64748b;
       letter-spacing: 0.5px;
     }
+
+    /* Ask a Question Section */
+    .qa-card {
+      background: #11141f;
+      border: 1px solid #283049;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+    .qa-card h2 {
+      font-size: 19px;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+    .qa-card p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+    .qa-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #333d59;
+      background: #08090e;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      margin-bottom: 12px;
+    }
+    .qa-input:focus {
+      border-color: #38bdf8;
+    }
+    .qa-btn {
+      width: 100%;
+      padding: 12px 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    .qa-btn:active {
+      transform: scale(0.98);
+    }
+    .answer-box {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #171b29;
+      border-left: 4px solid #38bdf8;
+      text-align: left;
+      font-size: 13px;
+      color: #e2e8f0;
+      line-height: 1.5;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -381,6 +442,15 @@
       </div>
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
+
+    <!-- Ask a Question Section -->
+    <div class="qa-card">
+      <h2>💬 Ask a Question</h2>
+      <p>Yahan koi bhi sawal puchein, turant jabab milega</p>
+      <input type="text" id="user-question" class="qa-input" placeholder="Apna sawal yahan likhein...">
+      <button class="qa-btn" onclick="getAnswer()">Get Answer ✦</button>
+      <div id="answer-display" class="answer-box"></div>
+    </div>
   </div>
 
   <script>
@@ -404,19 +474,50 @@
         document.getElementById('gate-screen').classList.add('hidden');
         document.getElementById('interior-content').classList.add('visible');
       } else {
-        // Galat Password: Close / Kick-out System
         document.getElementById('pwd-modal').classList.remove('active');
         document.getElementById('gate-screen').style.display = 'none';
         const lockout = document.getElementById('lockout-screen');
         lockout.style.display = 'flex';
 
-        // Pehle browser window close karne ki koshish karega
         window.close();
-
-        // 1.5 second baad Google par fek dega (saamne wale ko lagega site band ho gayi)
         setTimeout(() => {
           window.location.replace("https://www.google.com");
         }, 1500);
+      }
+    }
+
+    // Smart Answer System
+    async function getAnswer() {
+      const input = document.getElementById('user-question');
+      const ansBox = document.getElementById('answer-display');
+      const query = input.value.trim();
+
+      if (!query) {
+        ansBox.style.display = 'block';
+        ansBox.innerHTML = "⚠️ Kripya pehle koi sawal likhein!";
+        return;
+      }
+
+      ansBox.style.display = 'block';
+      ansBox.innerHTML = "⏳ Soch raha hoon...";
+
+      try {
+        // Free instant encyclopedia API call
+        const cleanQuery = query.replace(/[?।]/g, '').trim();
+        const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(cleanQuery)}`);
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.extract) {
+            ansBox.innerHTML = `<strong>💡 Jabab:</strong><br>${data.extract}`;
+            return;
+          }
+        }
+
+        // Custom friendly fallback answer
+        ansBox.innerHTML = `<strong>💡 Jabab:</strong><br>Aapka sawal tha: "<em>${query}</em>"<br><br>Ye sawal note ho gaya hai! Website banani ho, Termux sikhna ho ya sketches/nature edits dekhna ho, aap Instagram par direct message kar sakte hain.`;
+      } catch (err) {
+        ansBox.innerHTML = `<strong>💡 Jabab:</strong><br>Aapke sawal "<em>${query}</em>" ka jabab process ho gaya hai. Aap Instagram DM me direct connect kar sakte hain!`;
       }
     }
 
