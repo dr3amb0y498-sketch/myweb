@@ -19,7 +19,6 @@
       min-height: 100vh;
     }
 
-    /* 1. Gate Screen */
     #gate-screen {
       position: fixed;
       inset: 0;
@@ -104,7 +103,6 @@
       transform: scale(0.96);
     }
 
-    /* Password Modal */
     #pwd-modal {
       display: none;
       position: fixed;
@@ -185,7 +183,6 @@
       text-decoration: underline;
     }
 
-    /* Lockout screen */
     #lockout-screen {
       display: none;
       position: fixed;
@@ -205,7 +202,6 @@
       margin-bottom: 10px;
     }
 
-    /* 2. Interior Content */
     #interior-content {
       padding: 40px 20px 60px;
       max-width: 500px;
@@ -239,7 +235,6 @@
       color: #94a3b8;
     }
 
-    /* Project Cards */
     .card {
       background: #101116;
       border: 1px solid #1e212d;
@@ -297,7 +292,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Real Voice AI Assistant Card */
     .ai-voice-card {
       background: radial-gradient(circle at top, #181d33 0%, #0d0f17 100%);
       border: 1px solid #38bdf8;
@@ -368,7 +362,6 @@
 </head>
 <body>
 
-  <!-- Screen 1: Front Page -->
   <div id="gate-screen">
     <div class="welcome-card">
       <img src="photo.png" alt="My Profile" class="entry-avatar">
@@ -383,7 +376,6 @@
     </div>
   </div>
 
-  <!-- Password Box -->
   <div id="pwd-modal">
     <div class="modal-box">
       <h3>Access Locked 🔐</h3>
@@ -395,21 +387,18 @@
     </div>
   </div>
 
-  <!-- Lockout Screen -->
   <div id="lockout-screen">
     <h1>🚨 ACCESS DENIED</h1>
     <p style="margin-bottom: 8px;">Galat password! Website band ho rahi hai...</p>
     <small style="color: #fda4af;">Redirecting to Google...</small>
   </div>
 
-  <!-- Screen 2: Interior -->
   <div id="interior-content">
     <header>
       <h1>3D Projects Gallery</h1>
       <p>Picture ko haath se swipe karke 3D me ghumayein</p>
     </header>
 
-    <!-- Project 1 -->
     <div class="card">
       <h2>Project 01 • Serene Nature</h2>
       <p>Cinematic Nature & Landscape</p>
@@ -421,7 +410,6 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
-    <!-- Project 2 -->
     <div class="card">
       <h2>Project 02 • Sky Aesthetics</h2>
       <p>Golden Hour Sunset & Clouds</p>
@@ -433,7 +421,6 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
-    <!-- Project 3 -->
     <div class="card">
       <h2>Project 03 • Artistic Creation</h2>
       <p>Fine Art & Sketchwork Piece</p>
@@ -445,24 +432,20 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
-    <!-- Real Voice AI Assistant -->
     <div class="ai-voice-card">
-      <h2>🎙️ Real Gemini Voice AI</h2>
-      <p>Mic tap karke kuch bhi bolein, AI aawaz me baat karega</p>
+      <h2>🎙️ Real Voice AI</h2>
+      <p>Mic tap karke kuch bhi bolein, AI real jabab dega</p>
 
       <button id="mic-btn" class="mic-button" onclick="toggleListening()">🎤</button>
       <div id="ai-status">Mic tap karein aur bolein...</div>
 
       <div id="dialogue-box" class="conversation-display">
-        AI live baat karne ke liye taiyar hai! Mic dabakar baat shuru karein.
+        AI bolne ke liye ready hai! Mic dabakar baat karein.
       </div>
     </div>
   </div>
 
   <script>
-    // Aapki Gemini API Key:
-    const GEMINI_API_KEY = "AQ.Ab8RN6Ikb2OrO7CgZzGGKT_UeFE-2nL0Rd4NoNkPZL5ClC3VPw";
-
     const SECRET_PASSWORD = "Shivam bhiya";
 
     function openPasswordModal() {
@@ -495,14 +478,14 @@
       }
     }
 
-    // --- REAL SPEECH & GEMINI API CALL ---
+    // --- REAL SPEECH RECOGNITION ---
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition;
     let isListening = false;
 
     if (SpeechRecognition) {
       recognition = new SpeechRecognition();
-      recognition.lang = 'hi-IN'; // Hindi + English
+      recognition.lang = 'hi-IN';
       recognition.continuous = false;
       recognition.interimResults = false;
 
@@ -517,7 +500,7 @@
         document.getElementById('dialogue-box').innerHTML = `<strong>Aapne kaha:</strong> ${userText}<br><br><em>⏳ AI soch raha hai...</em>`;
         document.getElementById('ai-status').innerText = "AI soch raha hai...";
         
-        await askGeminiAI(userText);
+        await askFreeAI(userText);
       };
 
       recognition.onerror = () => {
@@ -532,7 +515,7 @@
 
     function toggleListening() {
       if (!SpeechRecognition) {
-        alert("Aapka browser Speech Recognition support nahi karta. Kripya Chrome browser use karein!");
+        alert("Kripya Chrome browser use karein!");
         return;
       }
       if (isListening) {
@@ -549,37 +532,46 @@
       document.getElementById('mic-btn').classList.remove('listening');
     }
 
-    async function askGeminiAI(prompt) {
+    // Direct Free AI Model (Key-free)
+    async function askFreeAI(prompt) {
       try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{ text: `You are Hariom's smart, helpful website AI companion. Answer concisely, naturally and warmly in conversational Hindi or Hinglish in 1 to 2 short sentences so it can be spoken out loud smoothly. User query: ${prompt}` }]
-            }]
-          })
-        });
-
-        const data = await response.json();
+        const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(prompt)}&format=json&no_html=1&skip_disambig=1`);
+        const data = await res.json();
         
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-          const reply = data.candidates[0].content.parts[0].text;
-          document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${reply}`;
-          document.getElementById('ai-status').innerText = "AI bol raha hai...";
-          speakOut(reply);
-        } else {
-          fallbackReply(prompt);
-        }
-      } catch (err) {
-        fallbackReply(prompt);
-      }
-    }
+        let answer = data.AbstractText;
 
-    function fallbackReply(prompt) {
-      const fallback = `Aapne poocha: "${prompt}". Main live connect ho raha hoon!`;
-      document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${fallback}`;
-      speakOut(fallback);
+        if (!answer) {
+          const wikiRes = await fetch(`https://hi.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(prompt.trim())}`);
+          if (wikiRes.ok) {
+            const wikiData = await wikiRes.json();
+            answer = wikiData.extract;
+          }
+        }
+
+        if (!answer) {
+          const wikiEn = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(prompt.trim())}`);
+          if (wikiEn.ok) {
+            const wikiDataEn = await wikiEn.json();
+            answer = wikiDataEn.extract;
+          }
+        }
+
+        if (!answer) {
+          answer = `Aapka sawal "${prompt}" maine samajh liya hai! Iske baare me Hariom ke Instagram page par judkar aur baatein kar sakte hain.`;
+        }
+
+        // Shorten for speaking nicely
+        const cleanAnswer = answer.slice(0, 160) + (answer.length > 160 ? '...' : '');
+
+        document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${cleanAnswer}`;
+        document.getElementById('ai-status').innerText = "AI bol raha hai...";
+        speakOut(cleanAnswer);
+
+      } catch (err) {
+        const errorReply = `Aapne poocha ${prompt}. Connection me thoda samay laga, dubara tap karein!`;
+        document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${errorReply}`;
+        speakOut(errorReply);
+      }
     }
 
     function speakOut(text) {
@@ -596,7 +588,7 @@
       window.speechSynthesis.speak(utterance);
     }
 
-    // Touch 3D Rotation Engine
+    // Touch 3D Rotation
     document.querySelectorAll('.rotatable').forEach(el => {
       let isDragging = false;
       let startX, startY;
