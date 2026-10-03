@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hariom | Creative 3D Showcase & Voice AI</title>
+  <title>Hariom | Pro 3D Showcase & Tools Hub</title>
   <!-- Google Premium Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -220,12 +220,12 @@
 
     /* 2. Main Interior Content */
     #interior-content {
-      padding: 40px 20px 80px;
+      padding: 30px 20px 80px;
       max-width: 500px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      gap: 24px;
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
@@ -237,7 +237,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
     .author-tag {
       display: inline-block;
@@ -250,19 +250,66 @@
       padding: 5px 14px;
       border-radius: 20px;
       border: 1px solid rgba(56, 189, 248, 0.25);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     header h1 {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
       background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     header p {
       font-size: 13px;
       color: #94a3b8;
+    }
+
+    /* Floating Navigation Tabs */
+    .tab-bar {
+      display: flex;
+      background: rgba(17, 20, 31, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 5px;
+      gap: 6px;
+      position: sticky;
+      top: 15px;
+      z-index: 100;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 0;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #0284c7, #6366f1);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+    }
+
+    /* Tab Content Panes */
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeIn 0.4s ease;
+    }
+    .tab-pane.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Modern Glassmorphic Cards */
@@ -468,6 +515,67 @@
       overflow-y: auto;
     }
 
+    /* Tools Styling */
+    .tool-box {
+      background: rgba(17, 20, 31, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 22px;
+      padding: 22px;
+      text-align: left;
+    }
+    .tool-box h3 {
+      font-size: 17px;
+      color: #38bdf8;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tool-box p {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .tool-btn {
+      display: inline-block;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      margin-top: 4px;
+      border: none;
+      cursor: pointer;
+    }
+    .tool-input {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: 1px solid #333d59;
+      background: #090b12;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      margin-bottom: 10px;
+    }
+    .qr-result {
+      margin-top: 14px;
+      text-align: center;
+      display: none;
+    }
+    .qr-result img {
+      width: 150px;
+      height: 150px;
+      border-radius: 12px;
+      border: 3px solid #38bdf8;
+      background: #ffffff;
+      padding: 6px;
+    }
+
     /* Clean Footer */
     footer {
       text-align: center;
@@ -522,76 +630,117 @@
   <div id="interior-content">
     <header>
       <span class="author-tag">Creative Portfolio</span>
-      <h1>Hariom's 3D Gallery</h1>
-      <p>Pictures ko ungli se swipe karke 3D me ghumayein</p>
+      <h1>Hariom's Official Hub</h1>
+      <p>Termux & Mobile Crafted Experience</p>
     </header>
 
-    <!-- Project 1 -->
-    <div class="card">
-      <span class="card-badge">Nature Aesthetic</span>
-      <h2>Project 01 • Serene Nature</h2>
-      <p>Cinematic Nature & Landscape Capture</p>
-      <div class="scene-3d">
-        <div class="box-3d rotatable">
-          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80" alt="Nature Project">
-        </div>
-      </div>
-      <span class="hint">🖐 Swipe to rotate in 3D</span>
+    <!-- Floating Navigation Bar -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('showcase')">🌟 3D Gallery</button>
+      <button class="tab-btn" onclick="switchTab('voice')">🎙️ Voice AI</button>
+      <button class="tab-btn" onclick="switchTab('tools')">🛠️ Smart Tools</button>
     </div>
 
-    <!-- Project 2 -->
-    <div class="card">
-      <span class="card-badge">Golden Hour</span>
-      <h2>Project 02 • Sky Aesthetics</h2>
-      <p>Vibrant Sunset Clouds & Atmospheric Vibe</p>
-      <div class="scene-3d">
-        <div class="box-3d rotatable">
-          <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80" alt="Sky Project">
+    <!-- TAB 1: 3D SHOWCASE -->
+    <div id="tab-showcase" class="tab-pane active">
+      <!-- Project 1 -->
+      <div class="card">
+        <span class="card-badge">Nature Aesthetic</span>
+        <h2>Project 01 • Serene Nature</h2>
+        <p>Cinematic Nature & Landscape Capture</p>
+        <div class="scene-3d">
+          <div class="box-3d rotatable">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80" alt="Nature Project">
+          </div>
         </div>
+        <span class="hint">🖐 Swipe to rotate in 3D</span>
       </div>
-      <span class="hint">🖐 Swipe to rotate in 3D</span>
+
+      <!-- Project 2 -->
+      <div class="card">
+        <span class="card-badge">Golden Hour</span>
+        <h2>Project 02 • Sky Aesthetics</h2>
+        <p>Vibrant Sunset Clouds & Atmospheric Vibe</p>
+        <div class="scene-3d">
+          <div class="box-3d rotatable">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80" alt="Sky Project">
+          </div>
+        </div>
+        <span class="hint">🖐 Swipe to rotate in 3D</span>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="card">
+        <span class="card-badge">Visual Art</span>
+        <h2>Project 03 • Artistic Creation</h2>
+        <p>Original Line Art, Sketch & Concepts</p>
+        <div class="scene-3d">
+          <div class="box-3d rotatable">
+            <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80" alt="Art Project">
+          </div>
+        </div>
+        <span class="hint">🖐 Swipe to rotate in 3D</span>
+      </div>
     </div>
 
-    <!-- Project 3 -->
-    <div class="card">
-      <span class="card-badge">Visual Art</span>
-      <h2>Project 03 • Artistic Creation</h2>
-      <p>Original Line Art, Sketch & Concepts</p>
-      <div class="scene-3d">
-        <div class="box-3d rotatable">
-          <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80" alt="Art Project">
+    <!-- TAB 2: VOICE AI -->
+    <div id="tab-voice" class="tab-pane">
+      <div class="ai-voice-card">
+        <h2>🎙️ AI Voice Companion</h2>
+        <p>Mic tap karein ya quick chip chunein, AI aawaz me bolega</p>
+
+        <button id="mic-btn" class="mic-button" onclick="toggleListening()">🎤</button>
+
+        <!-- Soundwave Visualizer -->
+        <div id="soundwave" class="soundwave">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+
+        <div id="ai-status">Mic tap karein aur bolein...</div>
+
+        <!-- Quick Suggestion Chips -->
+        <div class="chips-wrapper">
+          <div class="chip" onclick="askPreset('Hariom kaun hai?')">✦ Hariom kaun hai?</div>
+          <div class="chip" onclick="askPreset('Prakash sanshleshan kya hai?')">✦ Science Topic</div>
+          <div class="chip" onclick="askPreset('Bihar ke baare me batao')">✦ Bihar Fact</div>
+        </div>
+
+        <div id="dialogue-box" class="conversation-display">
+          AI aapse live baat karne ke liye taiyar hai! Mic dabakar ya kisi chip par tap karke baat shuru karein.
         </div>
       </div>
-      <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
-    <!-- Professional Voice AI Card -->
-    <div class="ai-voice-card">
-      <h2>🎙️ AI Voice Companion</h2>
-      <p>Mic tap karein ya quick chip chunein, AI aawaz me bolega</p>
-
-      <button id="mic-btn" class="mic-button" onclick="toggleListening()">🎤</button>
-
-      <!-- Soundwave Visualizer -->
-      <div id="soundwave" class="soundwave">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+    <!-- TAB 3: SMART TOOLS -->
+    <div id="tab-tools" class="tab-pane">
+      <!-- Tool 1: Emergency Lost Phone Finder Guide -->
+      <div class="tool-box">
+        <h3>📱 Lost Phone Recovery Guide</h3>
+        <p>Agar kisi ka phone kho ya chori ho gaya hai, to use bina fake apps ke seedha official portals se track ya block karein:</p>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a href="https://www.google.com/android/find" target="_blank" class="tool-btn" style="text-align:center;">
+            🔍 Google Find My Device (Live GPS Track)
+          </a>
+          <a href="https://www.ceir.gov.in" target="_blank" class="tool-btn" style="background: linear-gradient(135deg, #10b981, #059669); text-align:center;">
+            🛡️ CEIR Portal (Block Stolen IMEI)
+          </a>
+        </div>
       </div>
 
-      <div id="ai-status">Mic tap karein aur bolein...</div>
-
-      <!-- Quick Suggestion Chips -->
-      <div class="chips-wrapper">
-        <div class="chip" onclick="askPreset('Hariom kaun hai?')">✦ Hariom kaun hai?</div>
-        <div class="chip" onclick="askPreset('Prakash sanshleshan kya hai?')">✦ Science Topic</div>
-        <div class="chip" onclick="askPreset('Bihar ke baare me batao')">✦ Bihar Fact</div>
-      </div>
-
-      <div id="dialogue-box" class="conversation-display">
-        AI aapse live baat karne ke liye taiyar hai! Mic dabakar ya kisi chip par tap karke baat shuru karein.
+      <!-- Tool 2: Instant QR Code Generator -->
+      <div class="tool-box">
+        <h3>⚡ Instant QR Code Generator</h3>
+        <p>Apna link, Instagram username ya koi bhi text likhkar turant free QR Code banayein:</p>
+        <input type="text" id="qr-input" class="tool-input" placeholder="Yahan link ya text daalein...">
+        <button class="tool-btn" onclick="generateQR()">Generate QR Code ✦</button>
+        <div id="qr-result" class="qr-result">
+          <p style="margin-bottom:8px; font-weight:600;">Aapka QR Code:</p>
+          <img id="qr-img" src="" alt="Generated QR">
+        </div>
       </div>
     </div>
 
@@ -633,6 +782,35 @@
           window.location.replace("https://www.google.com");
         }, 1500);
       }
+    }
+
+    // --- TAB SWITCHER LOGIC ---
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+
+      if (tabName === 'showcase') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('tab-showcase').classList.add('active');
+      } else if (tabName === 'voice') {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('tab-voice').classList.add('active');
+      } else if (tabName === 'tools') {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.getElementById('tab-tools').classList.add('active');
+      }
+    }
+
+    // --- QR CODE GENERATOR ---
+    function generateQR() {
+      const text = document.getElementById('qr-input').value.trim();
+      if (!text) {
+        alert("Pehle koi link ya text likhein!");
+        return;
+      }
+      const qrImg = document.getElementById('qr-img');
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(text)}`;
+      document.getElementById('qr-result').style.display = 'block';
     }
 
     // --- SOUNDWAVE VISUALIZER CONTROL ---
@@ -700,7 +878,6 @@
       setVisualizer(false);
     }
 
-    // Chip Trigger
     function askPreset(question) {
       window.speechSynthesis.cancel();
       document.getElementById('dialogue-box').innerHTML = `<strong>Aapne chuna:</strong> ${question}<br><br><em>⏳ AI soch raha hai...</em>`;
@@ -765,7 +942,7 @@
       window.speechSynthesis.speak(utterance);
     }
 
-    // Touch 3D Rotation Engine
+    // --- 3D ROTATION ENGINE ---
     document.querySelectorAll('.rotatable').forEach(el => {
       let isDragging = false;
       let startX, startY;
