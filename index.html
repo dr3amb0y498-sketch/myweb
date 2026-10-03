@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hariom | Real AI Voice Showcase</title>
+  <title>Hariom | Creative 3D Showcase & Voice AI</title>
+  <!-- Google Premium Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -12,17 +16,21 @@
       -webkit-tap-highlight-color: transparent;
     }
     body {
-      background-color: #050507;
-      color: #ffffff;
-      font-family: 'Segoe UI', Roboto, sans-serif;
+      background-color: #06070a;
+      background-image: 
+        radial-gradient(at 10% 20%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+        radial-gradient(at 90% 80%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
     }
 
+    /* 1. Gate / Portal Screen */
     #gate-screen {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, #171923 0%, #06070a 100%);
+      background: radial-gradient(circle at center, #121522 0%, #050608 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -38,51 +46,57 @@
     }
 
     .welcome-card {
-      background: #11131a;
-      border: 1px solid #232738;
-      border-radius: 24px;
-      padding: 30px 24px;
+      background: rgba(18, 21, 33, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 32px 26px;
       text-align: center;
-      max-width: 320px;
+      max-width: 330px;
       width: 100%;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.08);
     }
 
     .entry-avatar {
-      width: 120px;
-      height: 120px;
+      width: 124px;
+      height: 124px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid #38bdf8;
-      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
-      margin-bottom: 16px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+      margin-bottom: 18px;
     }
 
     .welcome-card h2 {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 700;
-      color: #f8fafc;
+      color: #ffffff;
       margin-bottom: 6px;
     }
 
     .welcome-card p {
       font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .insta-link-btn {
       display: inline-block;
       width: 100%;
-      padding: 12px 0;
+      padding: 13px 0;
       background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
       color: white;
       text-decoration: none;
       border-radius: 30px;
       font-weight: 700;
       font-size: 14px;
-      box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);
-      margin-bottom: 15px;
+      box-shadow: 0 4px 18px rgba(220, 39, 67, 0.35);
+      margin-bottom: 14px;
+      transition: transform 0.2s;
+    }
+    .insta-link-btn:active {
+      transform: scale(0.97);
     }
 
     .enter-btn {
@@ -96,19 +110,20 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 4px 18px rgba(168, 85, 247, 0.4);
+      box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
       transition: transform 0.2s;
     }
     .enter-btn:active {
       transform: scale(0.96);
     }
 
+    /* Password Modal */
     #pwd-modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(12px);
       z-index: 1000;
       justify-content: center;
       align-items: center;
@@ -119,14 +134,15 @@
     }
 
     .modal-box {
-      background: #151822;
-      border: 1px solid #2e354b;
-      border-radius: 20px;
-      padding: 26px 22px;
-      max-width: 310px;
+      background: rgba(21, 24, 38, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 28px 24px;
+      max-width: 320px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.9);
       animation: popIn 0.3s ease-out;
     }
     @keyframes popIn {
@@ -135,27 +151,26 @@
     }
 
     .modal-box h3 {
-      font-size: 18px;
+      font-size: 19px;
       margin-bottom: 6px;
       color: #f8fafc;
     }
     .modal-box p {
-      font-size: 12px;
+      font-size: 13px;
       color: #94a3b8;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .pwd-input {
       width: 100%;
-      padding: 12px 16px;
-      border-radius: 12px;
+      padding: 13px 16px;
+      border-radius: 14px;
       border: 1px solid #3b4259;
       background: #090a0f;
       color: #fff;
       font-size: 15px;
       text-align: center;
       outline: none;
-      letter-spacing: 1px;
       margin-bottom: 14px;
     }
     .pwd-input:focus {
@@ -164,17 +179,17 @@
 
     .unlock-btn {
       width: 100%;
-      padding: 12px 0;
+      padding: 13px 0;
       font-size: 14px;
       font-weight: 700;
       color: #fff;
       background: linear-gradient(135deg, #10b981, #059669);
       border: none;
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
     }
     .cancel-btn {
-      margin-top: 10px;
+      margin-top: 12px;
       background: transparent;
       border: none;
       color: #64748b;
@@ -183,6 +198,7 @@
       text-decoration: underline;
     }
 
+    /* Red Lockout / Exit Screen */
     #lockout-screen {
       display: none;
       position: fixed;
@@ -202,8 +218,9 @@
       margin-bottom: 10px;
     }
 
+    /* 2. Main Interior Content */
     #interior-content {
-      padding: 40px 20px 60px;
+      padding: 40px 20px 80px;
       max-width: 500px;
       margin: 0 auto;
       display: flex;
@@ -220,32 +237,60 @@
 
     header {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+    }
+    .author-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-bottom: 12px;
     }
     header h1 {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
       background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
     header p {
       font-size: 13px;
       color: #94a3b8;
     }
 
+    /* Modern Glassmorphic Cards */
     .card {
-      background: #101116;
-      border: 1px solid #1e212d;
-      border-radius: 20px;
-      padding: 22px;
+      background: rgba(17, 20, 31, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 24px;
+      padding: 24px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+    }
+    .card-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 12px;
+      background: rgba(148, 163, 184, 0.1);
+      color: #cbd5e1;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      margin-bottom: 10px;
     }
     .card h2 {
-      font-size: 18px;
-      margin-bottom: 6px;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 4px;
       color: #f1f5f9;
     }
     .card p {
@@ -254,6 +299,7 @@
       margin-bottom: 18px;
     }
 
+    /* 3D Scene Viewport */
     .scene-3d {
       width: 100%;
       height: 240px;
@@ -269,15 +315,15 @@
       position: relative;
       transform-style: preserve-3d;
       transition: transform 0.1s ease-out;
-      border-radius: 16px;
+      border-radius: 18px;
       cursor: grab;
     }
     .box-3d img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 16px;
-      border: 2px solid #38bdf8;
+      border-radius: 18px;
+      border: 2px solid rgba(56, 189, 248, 0.5);
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
       user-select: none;
       -webkit-user-drag: none;
@@ -292,28 +338,32 @@
       letter-spacing: 0.5px;
     }
 
+    /* Professional AI Voice Section */
     .ai-voice-card {
-      background: radial-gradient(circle at top, #181d33 0%, #0d0f17 100%);
-      border: 1px solid #38bdf8;
-      border-radius: 24px;
-      padding: 28px 20px;
+      background: radial-gradient(circle at top, rgba(24, 29, 51, 0.8) 0%, rgba(13, 15, 23, 0.95) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 26px;
+      padding: 28px 22px;
       text-align: center;
-      box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.15);
     }
     .ai-voice-card h2 {
-      font-size: 20px;
+      font-size: 21px;
       color: #38bdf8;
       margin-bottom: 4px;
+      font-weight: 700;
     }
     .ai-voice-card p {
       font-size: 12px;
       color: #94a3b8;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .mic-button {
-      width: 76px;
-      height: 76px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       border: none;
       background: linear-gradient(135deg, #0ea5e9, #6366f1);
@@ -338,18 +388,77 @@
       100% { transform: scale(1); }
     }
 
+    /* Live Animated Audio Waves */
+    .soundwave {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      height: 24px;
+      margin-bottom: 12px;
+      opacity: 0.3;
+      transition: opacity 0.3s;
+    }
+    .soundwave.active {
+      opacity: 1;
+    }
+    .bar {
+      width: 4px;
+      height: 8px;
+      background: #38bdf8;
+      border-radius: 4px;
+      transition: height 0.2s ease;
+    }
+    .soundwave.active .bar {
+      animation: wave 1s infinite ease-in-out;
+    }
+    .soundwave.active .bar:nth-child(1) { animation-delay: 0.1s; }
+    .soundwave.active .bar:nth-child(2) { animation-delay: 0.3s; }
+    .soundwave.active .bar:nth-child(3) { animation-delay: 0.2s; }
+    .soundwave.active .bar:nth-child(4) { animation-delay: 0.4s; }
+    .soundwave.active .bar:nth-child(5) { animation-delay: 0.15s; }
+
+    @keyframes wave {
+      0%, 100% { height: 6px; }
+      50% { height: 24px; background: #c084fc; }
+    }
+
     #ai-status {
       font-size: 13px;
       font-weight: 600;
       color: #cbd5e1;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    /* Quick Suggestion Chips */
+    .chips-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12px;
+      color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip:active {
+      transform: scale(0.95);
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
     }
 
     .conversation-display {
       background: #08090f;
-      border: 1px solid #1f2538;
-      border-radius: 14px;
-      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 16px;
       text-align: left;
       font-size: 13px;
       line-height: 1.6;
@@ -358,15 +467,29 @@
       max-height: 180px;
       overflow-y: auto;
     }
+
+    /* Clean Footer */
+    footer {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.6;
+    }
+    footer span {
+      color: #94a3b8;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Screen 1: Front Gate -->
   <div id="gate-screen">
     <div class="welcome-card">
       <img src="photo.png" alt="My Profile" class="entry-avatar">
       <h2>Welcome to My Site</h2>
-      <p>Termux se bani meri official website</p>
+      <p>Termux se bani meri official portfolio website</p>
 
       <a href="https://www.instagram.com/hariom__thakur91" target="_blank" class="insta-link-btn">
         Follow on Instagram
@@ -376,6 +499,7 @@
     </div>
   </div>
 
+  <!-- Password Box -->
   <div id="pwd-modal">
     <div class="modal-box">
       <h3>Access Locked 🔐</h3>
@@ -387,21 +511,26 @@
     </div>
   </div>
 
+  <!-- Lockout Screen -->
   <div id="lockout-screen">
     <h1>🚨 ACCESS DENIED</h1>
     <p style="margin-bottom: 8px;">Galat password! Website band ho rahi hai...</p>
     <small style="color: #fda4af;">Redirecting to Google...</small>
   </div>
 
+  <!-- Screen 2: Interior Content -->
   <div id="interior-content">
     <header>
-      <h1>3D Projects Gallery</h1>
-      <p>Picture ko haath se swipe karke 3D me ghumayein</p>
+      <span class="author-tag">Creative Portfolio</span>
+      <h1>Hariom's 3D Gallery</h1>
+      <p>Pictures ko ungli se swipe karke 3D me ghumayein</p>
     </header>
 
+    <!-- Project 1 -->
     <div class="card">
+      <span class="card-badge">Nature Aesthetic</span>
       <h2>Project 01 • Serene Nature</h2>
-      <p>Cinematic Nature & Landscape</p>
+      <p>Cinematic Nature & Landscape Capture</p>
       <div class="scene-3d">
         <div class="box-3d rotatable">
           <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80" alt="Nature Project">
@@ -410,9 +539,11 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
+    <!-- Project 2 -->
     <div class="card">
+      <span class="card-badge">Golden Hour</span>
       <h2>Project 02 • Sky Aesthetics</h2>
-      <p>Golden Hour Sunset & Clouds</p>
+      <p>Vibrant Sunset Clouds & Atmospheric Vibe</p>
       <div class="scene-3d">
         <div class="box-3d rotatable">
           <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80" alt="Sky Project">
@@ -421,9 +552,11 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
+    <!-- Project 3 -->
     <div class="card">
+      <span class="card-badge">Visual Art</span>
       <h2>Project 03 • Artistic Creation</h2>
-      <p>Fine Art & Sketchwork Piece</p>
+      <p>Original Line Art, Sketch & Concepts</p>
       <div class="scene-3d">
         <div class="box-3d rotatable">
           <img src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80" alt="Art Project">
@@ -432,17 +565,41 @@
       <span class="hint">🖐 Swipe to rotate in 3D</span>
     </div>
 
+    <!-- Professional Voice AI Card -->
     <div class="ai-voice-card">
-      <h2>🎙️ Real Voice AI</h2>
-      <p>Mic tap karke kuch bhi bolein, AI sach me aawaz me baat karega</p>
+      <h2>🎙️ AI Voice Companion</h2>
+      <p>Mic tap karein ya quick chip chunein, AI aawaz me bolega</p>
 
       <button id="mic-btn" class="mic-button" onclick="toggleListening()">🎤</button>
+
+      <!-- Soundwave Visualizer -->
+      <div id="soundwave" class="soundwave">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
       <div id="ai-status">Mic tap karein aur bolein...</div>
 
+      <!-- Quick Suggestion Chips -->
+      <div class="chips-wrapper">
+        <div class="chip" onclick="askPreset('Hariom kaun hai?')">✦ Hariom kaun hai?</div>
+        <div class="chip" onclick="askPreset('Prakash sanshleshan kya hai?')">✦ Science Topic</div>
+        <div class="chip" onclick="askPreset('Bihar ke baare me batao')">✦ Bihar Fact</div>
+      </div>
+
       <div id="dialogue-box" class="conversation-display">
-        AI aapse live baat karne ke liye taiyar hai! Mic dabakar baat karein.
+        AI aapse live baat karne ke liye taiyar hai! Mic dabakar ya kisi chip par tap karke baat shuru karein.
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 <span>Hariom</span> • All rights reserved</p>
+      <p>Crafted on mobile using Termux</p>
+    </footer>
   </div>
 
   <script>
@@ -478,6 +635,16 @@
       }
     }
 
+    // --- SOUNDWAVE VISUALIZER CONTROL ---
+    function setVisualizer(active) {
+      const wave = document.getElementById('soundwave');
+      if (active) {
+        wave.classList.add('active');
+      } else {
+        wave.classList.remove('active');
+      }
+    }
+
     // --- VOICE SPEECH RECOGNITION ---
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition;
@@ -493,13 +660,13 @@
         isListening = true;
         document.getElementById('mic-btn').classList.add('listening');
         document.getElementById('ai-status').innerText = "Sun raha hoon... Bolein!";
+        setVisualizer(true);
       };
 
       recognition.onresult = async (event) => {
         const userText = event.results[0][0].transcript;
         document.getElementById('dialogue-box').innerHTML = `<strong>Aapne kaha:</strong> ${userText}<br><br><em>⏳ AI soch raha hai...</em>`;
         document.getElementById('ai-status').innerText = "AI soch raha hai...";
-        
         await processAIResponse(userText);
       };
 
@@ -530,25 +697,33 @@
     function stopMic() {
       isListening = false;
       document.getElementById('mic-btn').classList.remove('listening');
+      setVisualizer(false);
     }
 
-    // --- REAL SMART AI BRAIN (ONLINE + INSTANT INTELLIGENCE) ---
+    // Chip Trigger
+    function askPreset(question) {
+      window.speechSynthesis.cancel();
+      document.getElementById('dialogue-box').innerHTML = `<strong>Aapne chuna:</strong> ${question}<br><br><em>⏳ AI soch raha hai...</em>`;
+      document.getElementById('ai-status').innerText = "AI soch raha hai...";
+      processAIResponse(question);
+    }
+
+    // --- AI CONVERSATIONAL BRAIN ---
     async function processAIResponse(prompt) {
       const q = prompt.toLowerCase();
       let reply = "";
 
-      // Smart Contextual Knowledge
       if (q.includes("namaste") || q.includes("hello") || q.includes("hi") || q.includes("kya hal")) {
         reply = "Namaste! Main badhiya hoon. Aap bataiye, aaj kya madad karu?";
       } 
       else if (q.includes("kaun ho") || q.includes("naam kya") || q.includes("who are you")) {
-        reply = "Main Hariom ki website ka smart AI companion hoon! Mujhse aap padhai, science, ya koi bhi baat pooch sakte hain.";
+        reply = "Main Hariom ki portfolio website ka AI companion hoon! Mujhse aap padhai, science, ya koi bhi baat pooch sakte hain.";
       }
       else if (q.includes("hariom") || q.includes("owner") || q.includes("kiska website")) {
-        reply = "Ye website Hariom ki hai, jo unhone apne phone par Termux se design ki hai!";
+        reply = "Ye website Hariom ki hai, jo unhone apne phone par Termux se design aur code ki hai!";
       }
       else if (q.includes("bihar") || q.includes("patna") || q.includes("madhubani")) {
-        reply = "Bihar itihaas, gyaan aur sanskriti ki pavitra bhoomi hai, jahan Nalanda aur Madhubani kala poori duniya me mashhur hain!";
+        reply = "Bihar itihaas aur gyaan ki pavitra bhoomi hai, jahan Nalanda vishvavidyalaya aur Madhubani art poori duniya me mashhur hain!";
       }
       else if (q.includes("photosynthesis") || q.includes("prakash sanshleshan")) {
         reply = "Prakash sanshleshan wo prakriya hai jisme paudhe surya ke prakash, jal aur carbon dioxide se apna bhojan banate hain.";
@@ -557,27 +732,10 @@
         reply = "Vigyan prakriti ke niyamo ko samajhne aur nayi khoj karne ki adbhut shakti hai!";
       }
       else if (q.includes("math") || q.includes("ganit")) {
-        reply = "Ganit sankhyaon aur patterns ka sundar khel hai. Kaunsa formula ya topic samajhna hai?";
-      }
-      else if (q.includes("kya kar sakte ho") || q.includes("help")) {
-        reply = "Main aapse aam baatein kar sakta hoon, padhai ke topics samjha sakta hoon aur sawalon ke jabab de sakta hoon.";
+        reply = "Ganit sankhyaon aur patterns ka sundar khel hai. Kaunsa topic samajhna hai?";
       }
       else {
-        // Online Knowledge Fetch with robust fallback
-        try {
-          const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(prompt.trim().split(' ')[0])}`);
-          if (res.ok) {
-            const data = await res.json();
-            if (data[0] && data[0].meanings[0]) {
-              const def = data[0].meanings[0].definitions[0].definition;
-              reply = `Aapke sawal ke anusaar: ${def}`;
-            }
-          }
-        } catch(e) {}
-
-        if (!reply) {
-          reply = `Aapka sawal "${prompt}" bohot badhiya hai! Is vishay par dhyan se socha jaye to ye kaafi rochak topic hai. Kuch aur bhi poochna chahte hain?`;
-        }
+        reply = `Aapka sawal "${prompt}" bohot badhiya hai! Hariom ke sketches, projects ya Termux workflows ke baare me aur baatein karne ke liye aap Instagram par jud sakte hain.`;
       }
 
       document.getElementById('dialogue-box').innerHTML = `<strong>Aap:</strong> ${prompt}<br><br><strong>🤖 AI:</strong> ${reply}`;
@@ -593,14 +751,21 @@
       utterance.rate = 1.0;
       utterance.pitch = 1.0;
 
+      setVisualizer(true);
+
       utterance.onend = () => {
+        setVisualizer(false);
         document.getElementById('ai-status').innerText = "Mic tap karke dubara bolein";
+      };
+
+      utterance.onerror = () => {
+        setVisualizer(false);
       };
 
       window.speechSynthesis.speak(utterance);
     }
 
-    // Touch 3D Rotation
+    // Touch 3D Rotation Engine
     document.querySelectorAll('.rotatable').forEach(el => {
       let isDragging = false;
       let startX, startY;
