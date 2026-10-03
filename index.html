@@ -1,57 +1,322 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Website</title>
+  <title>Hariom | 3D Portfolio</title>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
     body {
-      background-color: #0f172a;
-      color: #f8fafc;
-      font-family: sans-serif;
+      background-color: #050507;
+      color: #ffffff;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* 1. First Entry Screen (Profile + Insta + Enter Button) */
+    #gate-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #171923 0%, #06070a 100%);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 90vh;
-      margin: 0;
-      padding: 15px;
+      padding: 20px;
+      z-index: 999;
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .profile-card {
-      background: #1e293b;
-      padding: 25px;
-      border-radius: 16px;
+    #gate-screen.hidden {
+      opacity: 0;
+      transform: scale(1.6);
+      pointer-events: none;
+    }
+
+    .welcome-card {
+      background: #11131a;
+      border: 1px solid #232738;
+      border-radius: 24px;
+      padding: 30px 24px;
       text-align: center;
       max-width: 320px;
       width: 100%;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
     }
-    .profile-card img {
-      width: 140px;
-      height: 140px;
+
+    .entry-avatar {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid #38bdf8;
+      box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3);
+      margin-bottom: 16px;
     }
-    h1 {
-      margin: 15px 0 5px;
-      font-size: 22px;
+
+    .welcome-card h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 6px;
     }
-    p {
+
+    .welcome-card p {
+      font-size: 13px;
       color: #94a3b8;
+      margin-bottom: 20px;
+    }
+
+    /* Instagram Button */
+    .insta-link-btn {
+      display: inline-block;
+      width: 100%;
+      padding: 12px 0;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 700;
       font-size: 14px;
-      line-height: 1.5;
+      box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);
+      margin-bottom: 15px;
+    }
+
+    /* Enter Site Button */
+    .enter-btn {
+      width: 100%;
+      padding: 13px 0;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(168, 85, 247, 0.4);
+      transition: transform 0.2s;
+    }
+    .enter-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* 2. Main Black Interior Screen */
+    #interior-content {
+      padding: 40px 20px 60px;
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+    }
+    #interior-content.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* Project Cards */
+    .card {
+      background: #101116;
+      border: 1px solid #1e212d;
+      border-radius: 20px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    }
+    .card h2 {
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: #f1f5f9;
+    }
+    .card p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+    }
+
+    /* 3D Scene Viewport */
+    .scene-3d {
+      width: 100%;
+      height: 240px;
+      perspective: 900px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      touch-action: none;
+    }
+    .box-3d {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+      border-radius: 16px;
+      cursor: grab;
+    }
+    .box-3d img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 2px solid #38bdf8;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    .hint {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 11px;
+      color: #64748b;
+      letter-spacing: 0.5px;
     }
   </style>
 </head>
 <body>
 
-  <div class="profile-card">
-    <img src="photo.png" alt="My Photo">
-    <h1>Welcome to My Website</h1>
-    <p>Ye website maine apne phone par Termux se banayi hai!</p>
-    <a href="https://www.instagram.com/hariom__thakur91" target="_blank" style="display: inline-block; padding: 10px 22px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; text-decoration: none; border-radius: 25px; font-weight: bold; margin-top: 15px; font-size: 14px;">Follow on Instagram</a>
-    
+  <!-- Screen 1: Front Page (Photo + Insta + Enter Button) -->
+  <div id="gate-screen">
+    <div class="welcome-card">
+      <img src="photo.png" alt="My Profile" class="entry-avatar">
+      <h2>Welcome to My Site</h2>
+      <p>Termux se bani meri pehli website</p>
+
+      <!-- Instagram Link -->
+      <a href="https://www.instagram.com/hariom__thakur91" target="_blank" class="insta-link-btn">
+        Follow on Instagram
+      </a>
+
+      <!-- Enter Site Trigger -->
+      <button class="enter-btn" onclick="enterSite()">Enter The Site ✦</button>
+    </div>
   </div>
 
+  <!-- Screen 2: Black Theme Inside Projects -->
+  <div id="interior-content">
+    <header>
+      <h1>3D Projects Gallery</h1>
+      <p>Picture ko haath se swipe karke 3D me ghumayein</p>
+    </header>
+
+    <!-- Project 1 -->
+    <div class="card">
+      <h2>Project 01 • My Profile</h2>
+      <p>Card Showcase</p>
+      <div class="scene-3d">
+        <div class="box-3d rotatable">
+          <img src="photo.png" alt="Project 1">
+        </div>
+      </div>
+      <span class="hint">🖐 Swipe to rotate in 3D</span>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="card">
+      <h2>Project 02 • Nature Artwork</h2>
+      <p>Village Nature & Sky Pieces</p>
+      <div class="scene-3d">
+        <div class="box-3d rotatable">
+          <img src="photo.png" alt="Project 2">
+        </div>
+      </div>
+      <span class="hint">🖐 Swipe to rotate in 3D</span>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="card">
+      <h2>Project 03 • Creative Sketch</h2>
+      <p>Original Line Art & Sketches</p>
+      <div class="scene-3d">
+        <div class="box-3d rotatable">
+          <img src="photo.png" alt="Project 3">
+        </div>
+      </div>
+      <span class="hint">🖐 Swipe to rotate in 3D</span>
+    </div>
+  </div>
+
+  <script>
+    // Entry Animation Trigger
+    function enterSite() {
+      document.getElementById('gate-screen').classList.add('hidden');
+      document.getElementById('interior-content').classList.add('visible');
+    }
+
+    // Hand/Touch 3D Rotation Engine
+    document.querySelectorAll('.rotatable').forEach(el => {
+      let isDragging = false;
+      let startX, startY;
+      let currentRotX = 0;
+      let currentRotY = 0;
+
+      const onStart = (e) => {
+        isDragging = true;
+        const touch = e.touches ? e.touches[0] : e;
+        startX = touch.clientX;
+        startY = touch.clientY;
+        el.style.transition = 'none';
+      };
+
+      const onMove = (e) => {
+        if (!isDragging) return;
+        const touch = e.touches ? e.touches[0] : e;
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+
+        const rotY = currentRotY + deltaX * 0.4;
+        const rotX = currentRotX - deltaY * 0.4;
+
+        el.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.05)`;
+      };
+
+      const onEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        el.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        el.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+        currentRotX = 0;
+        currentRotY = 0;
+      };
+
+      // Mobile Touch
+      el.addEventListener('touchstart', onStart, { passive: true });
+      window.addEventListener('touchmove', onMove, { passive: true });
+      window.addEventListener('touchend', onEnd);
+
+      // Desktop Mouse
+      el.addEventListener('mousedown', onStart);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onEnd);
+    });
+  </script>
 </body>
 </html>
+
